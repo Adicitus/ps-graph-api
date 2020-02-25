@@ -17,7 +17,7 @@ function Save-GraphAPIAuthArgs {
         $authArgs = @{
             ClientId = $ClientId
             ClientSecret = ConvertFrom-SecureString $ClientSecret
-            $TenantId = $TenantId
+            TenantId = $TenantId
         }
     } else {
         $authArgs = @{
