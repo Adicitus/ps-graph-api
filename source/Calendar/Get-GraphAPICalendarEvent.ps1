@@ -19,7 +19,7 @@ function Get-GraphAPICalendarEvent {
     $uri = if ($CalendarID) {
         "https://graph.microsoft.com/v1.0/users/{0}/calendar/{1}/events" -f $encodedUser, $CalendarID
     } else {
-        "https://graph.microsoft.com/v1.0/users/{0}/events" -f $encodedUser
+        "https://graph.microsoft.com/v1.0/users/{0}/calendar/events" -f $encodedUser
     }
 
     if ($EventID) {
