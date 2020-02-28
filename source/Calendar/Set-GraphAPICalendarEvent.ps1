@@ -58,7 +58,7 @@ function Set-GraphAPICalendarEvent {
         $uri = "https://graph.microsoft.com/v1.0/users/{0}/events/{1}" -f $encodedUser, $EventID
     }
 
-    $headers = @{ "Content-Type"="application/json" } + $AuthObject.Headers
+    $headers = @{ "Content-Type"="application/json; charset=utf-8" } + $AuthObject.Headers
 
     if ($ExtraHeaders) {
         foreach ($header in $ExtraHeaders.Keys) {
@@ -108,8 +108,11 @@ function Set-GraphAPICalendarEvent {
         }
 
     }
+    # The built in ConvertTo-Json Cmdlet does not properly escape non-ascii characters,
+    # So we do that here:
+    $jsonBody = ConvertTo-UnicodeEscapedString $jsonBody
 
     $jsonBody | Write-Host
 
-    Invoke-RestMethod -Method Patch -Uri $uri -Headers $headers -Body $jsonBody
+    Invoke-WebRequest -Method Patch -Uri $uri -Headers $headers -Body $jsonBody
 }
