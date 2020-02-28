@@ -42,6 +42,6 @@ function Get-GraphAPICalendarEvent {
         }
     }
 
-    Invoke-RestMethod -Method Get -Uri $uri -Headers $headers
+    Invoke-WebRequest-Method Get -Uri $uri -Headers $headers
 
 }

@@ -32,6 +32,6 @@ function Remove-GraphAPICalendarEvent {
         }
     }
 
-    Invoke-RestMethod -Method Delete -Uri $uri -Headers $headers
+    Invoke-WebRequest -Method Delete -Uri $uri -Headers $headers
 
 }
