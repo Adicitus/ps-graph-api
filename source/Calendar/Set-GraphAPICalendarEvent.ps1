@@ -55,7 +55,7 @@ function Set-GraphAPICalendarEvent {
     if ($CalendarID) {
         $uri = "https://graph.microsoft.com/v1.0/users/{0}/calendar/{1}/events/{2}" -f $encodedUser, $CalendarID, $EventID
     } else {
-        $uri = "https://graph.microsoft.com/v1.0/users/{0}/events/{1}" -f $encodedUser, $EventID
+        $uri = "https://graph.microsoft.com/v1.0/users/{0}/calendar/events/{1}" -f $encodedUser, $EventID
     }
 
     $headers = @{ "Content-Type"="application/json; charset=utf-8" } + $AuthObject.Headers
@@ -114,5 +114,5 @@ function Set-GraphAPICalendarEvent {
 
     $jsonBody | Write-Host
 
-    Invoke-WebRequest -Method Patch -Uri $uri -Headers $headers -Body $jsonBody
+    Invoke-WebRequest -Method Patch -Uri $uri -Headers $headers -Body $jsonBody -UseBasicParsing
 }

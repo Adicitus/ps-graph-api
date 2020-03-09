@@ -112,5 +112,5 @@ function New-GraphAPICalendarEvent {
 
     $jsonBody | Write-Host
 
-    Invoke-WebRequest -Method Post -Uri $uri -Headers $headers -Body $jsonBody
+    Invoke-WebRequest -Method Post -Uri $uri -Headers $headers -Body $jsonBody -UseBasicParsing
 }
