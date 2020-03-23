@@ -47,6 +47,8 @@ function Set-GraphAPICalendarEvent {
         [ValidateSet("free", "tentative", "busy", "oof", "workingElsewhere", "unknown")]
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="Which type of description to use (HTML or Plain Text). HTML is default.")]
         [String]$ShowAs="busy",
+        [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="Whether the or not the meeting should request a response from recipients.")]
+        [bool]$ResponseRequested,
         [Parameter(Mandatory=$false, HelpMessage="Optional extra headers")]
         [hashtable]$ExtraHeaders = @{}
     )
@@ -101,6 +103,7 @@ function Set-GraphAPICalendarEvent {
                     "IsAllDay" { $requestBody.isAllDay = $IsAllDay }
                     "Importance" { $requestBody.importance = $Importance }
                     "Sensitivity" { $requestBody.sensitivity = $Sensitivity }
+                    "ResponseRequested" { $requestBody.responseRequested = $ResponseRequested }
                 }
             }
 
