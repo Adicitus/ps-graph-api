@@ -6,6 +6,8 @@ function Get-GraphAPICalendarEvent {
         [String]$User,
         [Parameter(Mandatory=$false, HelpMessage="Calendar ID for the calendar to get the event from. Uses the user's default calendar if not specified.")]
         [guid]$CalendarID,
+        [Parameter(Mandatory=$false, HelpMessage="Number of events to skip")]
+        [int]$Skip=0,
         [Parameter(Mandatory=$false, HelpMessage="ID of the Event to retrieve.")]
         [string]$EventID,
         [Parameter(Mandatory=$false, HelpMessage="The preferred timezone for returned dateTimes.")]
@@ -24,7 +26,22 @@ function Get-GraphAPICalendarEvent {
 
     if ($EventID) {
         $uri = $uri + "/" + $EventID
+    } else {
+        $c = @( $uri )
+
+        if ($Skip -gt 0) {
+            $c = $uri + ( '$skip={0}' -f $Skip )
+        }
+
+        #Further OData parameters go here.
+
+        if ($c.count -gt 1) {
+            $c[0] += "?"
+            $uri = $c -join "&"
+        }
     }
+
+    Write-Host $uri
 
     $headers = $AuthObject.Headers.clone()
 
@@ -42,6 +59,15 @@ function Get-GraphAPICalendarEvent {
         }
     }
 
-    Invoke-WebRequest-Method Get -Uri $uri -Headers $headers
+    $r = Invoke-WebRequest -Method Get -Uri $uri -Headers $headers -UseBasicParsing
+
+    $h = @{
+        StatusCode = $r.StatusCode
+        Content = $r.Content | ConvertFrom-Json 
+    }
+
+    $h.Events = $h.Content.Value
+
+    $h
 
 }
