@@ -30,7 +30,7 @@ function Get-GraphAPICalendarEvent {
         $c = @( $uri )
 
         if ($Skip -gt 0) {
-            $c = $uri + ( '$skip={0}' -f $Skip )
+            $c += '$skip={0}' -f $Skip
         }
 
         #Further OData parameters go here.
