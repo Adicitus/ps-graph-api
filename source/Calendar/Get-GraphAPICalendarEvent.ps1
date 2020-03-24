@@ -66,7 +66,11 @@ function Get-GraphAPICalendarEvent {
         Content = $r.Content | ConvertFrom-Json 
     }
 
-    $h.Events = $h.Content.Value
+    if ($EventID) {
+        $h.Event = $h.Content
+    } else {
+        $h.Events = $h.Content.Value
+    }
 
     $h
 
