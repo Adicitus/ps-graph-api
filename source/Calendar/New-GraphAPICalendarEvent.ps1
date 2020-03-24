@@ -47,6 +47,8 @@ function New-GraphAPICalendarEvent {
         [String]$ShowAs="busy",
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="Whether the or not the meeting should request a response from recipients.")]
         [bool]$ResponseRequested,
+        [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="OData extensions")]
+        [PSCustomObject[]]$Extensions,
         [Parameter(Mandatory=$false, HelpMessage="Optional extra headers")]
         [hashtable]$ExtraHeaders = @{}
     )
@@ -102,6 +104,7 @@ function New-GraphAPICalendarEvent {
                     "Importance" { $requestBody.importance = $Importance }
                     "Sensitivity" { $requestBody.sensitivity = $Sensitivity }
                     "ResponseRequested" { $requestBody.responseRequested = $ResponseRequested }
+                    "Extensions" { $requestBody.extensions = $Extensions }
                 }
             }
 
