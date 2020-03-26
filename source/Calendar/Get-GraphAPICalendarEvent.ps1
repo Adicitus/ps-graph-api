@@ -11,7 +11,7 @@ function Get-GraphAPICalendarEvent {
         [Parameter(Mandatory=$false, HelpMessage="ID of the Event to retrieve.")]
         [string]$EventID,
         [Parameter(Mandatory=$false, HelpMessage="The preferred timezone for returned dateTimes.")]
-        [System.TimeZoneInfo]$PreferredTimeZone = [System.TimeZoneInfo]::Local,
+        [System.TimeZoneInfo]$PreferredTimeZone = [System.TimeZoneInfo]::Utc,
         [Parameter(Mandatory=$false, HelpMessage="Optional extra headers")]
         [hashtable]$ExtraHeaders = @{}
     )
