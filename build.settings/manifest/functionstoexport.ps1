@@ -10,4 +10,8 @@
     "New-GraphAPICalendarEvent"
     "Set-GraphAPICalendarEvent"
     "Remove-GraphAPICalendarEvent"
+
+    # GraphAPI.OnlineMeeting
+    "New-GraphAPIOnlineMeeting"
+    "Set-GraphAPIOnlineMeeting"
 )
