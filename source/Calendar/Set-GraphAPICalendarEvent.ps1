@@ -20,7 +20,7 @@ function Set-GraphAPICalendarEvent {
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="List of Attendees (See https://docs.microsoft.com/en-us/graph/api/resources/attendeebase?view=graph-rest-1.0).")]
         [hashtable[]]$Attendees,
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="Time zone for the meeting Start and End times (See https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0). Defaults to local time.")]
-        [System.TimeZoneInfo]$TimeZone = [System.TimeZoneInfo]::Local,
+        [System.TimeZoneInfo]$TimeZone = [System.TimeZoneInfo]::Utc,
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="The Meeting description. Can be left empty.")]
         [String]$Body,
         [ValidateSet("HTML", "Text")]
@@ -49,6 +49,8 @@ function Set-GraphAPICalendarEvent {
         [String]$ShowAs="busy",
         [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="Whether the or not the meeting should request a response from recipients.")]
         [bool]$ResponseRequested,
+        [Parameter(Mandatory=$false, ParameterSetName="Params", HelpMessage="OData extensions")]
+        [PSCustomObject[]]$Extensions,
         [Parameter(Mandatory=$false, HelpMessage="Optional extra headers")]
         [hashtable]$ExtraHeaders = @{}
     )
@@ -104,6 +106,7 @@ function Set-GraphAPICalendarEvent {
                     "Importance" { $requestBody.importance = $Importance }
                     "Sensitivity" { $requestBody.sensitivity = $Sensitivity }
                     "ResponseRequested" { $requestBody.responseRequested = $ResponseRequested }
+                    "Extensions" { $requestBody.extensions = $Extensions }
                 }
             }
 

@@ -11,7 +11,7 @@ function Get-GraphAPICalendarEvent {
         [Parameter(Mandatory=$false, HelpMessage="ID of the Event to retrieve.")]
         [string]$EventID,
         [Parameter(Mandatory=$false, HelpMessage="The preferred timezone for returned dateTimes.")]
-        [System.TimeZoneInfo]$PreferredTimeZone = [System.TimeZoneInfo]::Local,
+        [System.TimeZoneInfo]$PreferredTimeZone = [System.TimeZoneInfo]::Utc,
         [Parameter(Mandatory=$false, HelpMessage="Optional extra headers")]
         [hashtable]$ExtraHeaders = @{}
     )
@@ -30,7 +30,7 @@ function Get-GraphAPICalendarEvent {
         $c = @( $uri )
 
         if ($Skip -gt 0) {
-            $c = $uri + ( '$skip={0}' -f $Skip )
+            $c += '$skip={0}' -f $Skip
         }
 
         #Further OData parameters go here.
@@ -66,7 +66,11 @@ function Get-GraphAPICalendarEvent {
         Content = $r.Content | ConvertFrom-Json 
     }
 
-    $h.Events = $h.Content.Value
+    if ($EventID) {
+        $h.Event = $h.Content
+    } else {
+        $h.Events = $h.Content.Value
+    }
 
     $h
 
